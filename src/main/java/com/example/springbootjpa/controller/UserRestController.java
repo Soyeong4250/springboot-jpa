@@ -29,7 +29,6 @@ public class UserRestController {
     @PostMapping()
     public ResponseEntity<UserResponseDto> addUser(@RequestBody UserRequestDto dto) {
         UserResponseDto userResponseDto = userService.insertUser(dto);
-        log.info("userResponseDto id : {}", userResponseDto.getId());
         return ResponseEntity.ok().body(userResponseDto);
     }
 }
