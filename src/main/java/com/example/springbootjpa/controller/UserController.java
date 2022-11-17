@@ -1,13 +1,12 @@
 package com.example.springbootjpa.controller;
 
+import com.example.springbootjpa.domain.dto.UserRequestDto;
 import com.example.springbootjpa.domain.dto.UserResponseDto;
 import com.example.springbootjpa.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @Slf4j
@@ -23,6 +22,13 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> findUser(@PathVariable Long id) {
         UserResponseDto userResponseDto = userService.getUser(id);
+        log.info("userResponseDto id : {}", userResponseDto.getId());
+        return ResponseEntity.ok().body(userResponseDto);
+    }
+
+    @PostMapping()
+    public ResponseEntity<UserResponseDto> addUser(@RequestBody UserRequestDto dto) {
+        UserResponseDto userResponseDto = userService.insertUser(dto);
         log.info("userResponseDto id : {}", userResponseDto.getId());
         return ResponseEntity.ok().body(userResponseDto);
     }
