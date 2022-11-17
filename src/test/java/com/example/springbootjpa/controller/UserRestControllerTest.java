@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -58,8 +59,8 @@ class UserRestControllerTest {
                 .password("testPassword")
                 .build();
 
-        given(userService.insertUser(dto))
-                .willReturn(new UserResponseDto(dto.getUsername(), "회원 등록 성공"));
+        given(userService.insertUser(any(UserRequestDto.class)))
+                .willReturn(new UserResponseDto(6L, dto.getUsername(), "회원 등록 성공"));
 
 
         mockMvc.perform(post("/api/v1/users")
@@ -71,6 +72,6 @@ class UserRestControllerTest {
                 .andExpect(jsonPath("$.message").exists())
                 .andDo(print());
 
-        verify(userService.insertUser(ArgumentMatchers.refEq(dto)));
+        verify(userService).insertUser(ArgumentMatchers.refEq(dto));
     }
 }
