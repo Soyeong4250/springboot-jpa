@@ -18,7 +18,11 @@ public class UserService {
 
     public UserResponseDto getUser(Long id) {
         Optional<User> optUser = userRepository.findById(id);
-        User user = optUser.get();
-        return UserResponseDto.of(user);
+        if (optUser.isEmpty()) {
+            return new UserResponseDto(id, "", "해당 id의 유저가 없습니다.");
+        } else {
+            User user = optUser.get();
+            return UserResponseDto.of(user);
+        }
     }
 }
