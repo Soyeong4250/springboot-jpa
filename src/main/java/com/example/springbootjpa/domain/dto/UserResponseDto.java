@@ -13,7 +13,4 @@ public class UserResponseDto {
     private String username;
     private String message;
 
-    public static UserResponseDto of(User user) {
-        return new UserResponseDto(user.getId(), user.getUsername(), "");
-    }
 }
